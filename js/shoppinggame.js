@@ -59,15 +59,20 @@ function MagicProduct(id, name, price, expiryDate, points, isBonus) {
 MagicProduct.prototype = Object.create(Product.prototype);
 
 // Define Rating class here
-class Rating{
-    constructor(rate=''){
-        this.rate = rate;
-    }
+class Rating {
+  constructor(rate ='') {
+    this.rate = rate;
+  }
 
-    set rating(value){
-        (value > 1 && value <= 4)? this.rate = 'OK' : (value >= 5 && value <= 7)? this.rate = 'GOOD':
-        (value > 7)? this.rate = 'EXCEPTIONAL' : this.rate = 'BAD';
-    }
+  set rating(value) {
+    value > 1 && value <= 4
+      ? (this.rate = 'Ok')
+      : value >= 5 && value <= 7
+      ? (this.rate = "GOOD")
+      : value > 7
+      ? (this.rate = "EXCEPTIONAL")
+      : (this.rate = "BAD");
+  }
 }
 
 // Complete the loadProducts function
@@ -241,15 +246,14 @@ function loadMasterData() {
 
 // Complete this function
 const findProductById = (id) => {
-  return function(prodInstance){
-    return (id === prodInstance.id)
-  } 
+  return function (prodInstance) {
+    return id === prodInstance.id;
+  };
 };
-
 
 // Complete this function
 const generateProductId = () => {
-  return Math.floor(Math.random() * 21 + 1)
+  return Math.floor(Math.random() * 21 + 1);
 };
 
 const getProduct = (prodList, pId) => {
@@ -257,7 +261,9 @@ const getProduct = (prodList, pId) => {
 };
 
 // Complete this function
-const calculateBill = (prod, tBill) => {};
+const calculateBill = (prod, tBill) => {
+  return prod.price + tBill;
+};
 
 const findPointsToBill = (roundedTotal) => {
   if (roundedTotal > 10 && roundedTotal <= 100) {
@@ -278,11 +284,19 @@ const findPointsToBill = (roundedTotal) => {
 };
 
 // Complete this function
-const findPointsForExpDate = (prod) => {};
+const findPointsForExpDate = (prod) => {
+  return prod.daysToExpire < 30 ? 10 : 0;
+};
 
 const calculatePoints = (prod, tBill) => {
   let pointsToBill = findPointsToBill(Math.round(tBill));
   let pointsForExpDate = findPointsForExpDate(prod);
+
+  player.score = player.score + pointsToBill + pointsForExpDate;
+
+  if(Object.getPrototypeOf(prod) === Object.getPrototypeOf(new MagicProduct())){
+    (prod.isBonus)? player.addPoints(prod.points) : player.deductPoints(prod.points);
+  }
 };
 
 // Complete this function
