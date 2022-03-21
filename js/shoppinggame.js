@@ -350,8 +350,7 @@ const shop = (prodList, tBill, lastProd) => {
   const prId = generateProductId();
  
   // Assign the value of product here
-  let product = (Object.is(lastProd,undefined))? lastProd : getProduct(prodList, prId);
-
+  let product = (Object.is(undefined,lastProd))? getProduct(prodList, prId) : lastProd;
   let productDetails = product.getDetails(); // Assign the value of productDetails here
 
   rl.question(
@@ -449,9 +448,9 @@ const exitWon = () => {
 };
 
 // Uncomment this function once you fully implement the game to be able to run it
-// (function setGameCompleteFlag(){
-//     gameComplete = true;
-// })();
+(function setGameCompleteFlag(){
+    gameComplete = true;
+})();
 
 function main() {
   let products = loadMasterData();
